@@ -40,10 +40,10 @@ Thumbs.db
 # Logs
 *.log
 
-# Maven/Gradle wrappers (αν δεν τα θες μέσα)
+# Maven/Gradle wrappers
 /.mvn/wrapper/maven-wrapper.jar
 
-# SSH/keys (μην ξαναμπεί τίποτα σχετικό)
+# SSH/keys
 id_rsa*
 id_ed25519*
 *.pem
