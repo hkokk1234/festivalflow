@@ -1,198 +1,49 @@
-# Festival Booking Management System
+# FestivalFlow
 
-A comprehensive Spring Boot application for managing music festivals, performances, and artist bookings with JWT-based authentication.
+A Spring Boot backend for managing music festivals end to end — from creating an event, to artists submitting performances, to staff handling the logistics behind the scenes.
 
-## Features
+I built this to go beyond basic CRUD and actually model how a festival works in practice: different people need different levels of access (an artist shouldn't be able to edit someone else's performance slot, but an organizer needs to see everything), and a lot of the real complexity is in the details — rehearsal slots, technical/setup requirements, merchandise — not just "festival has a name and a date."
 
-- **User Authentication**: Secure JWT-based authentication with role-based access control
-- **Festival Management**: Create, update, and browse music festivals
-- **Performance Booking**: Artists can submit and manage their performances
-- **Role-Based Access**: Support for multiple roles (Admin, Organizer, Staff, Artist, User)
-- **Search & Pagination**: Find festivals and performances with pagination support
-- **Responsive UI**: Modern, dark-themed web interface
-- **Technical Requirements**: Manage setup requirements, merchandise, and rehearsal slots
+## What it does
 
-## Tech Stack
+**Authentication & roles**
+JWT-based authentication with role-based access control across five roles: Admin, Organizer, Staff, Artist, and User. Each role sees and can do different things — an Artist manages their own performances, an Organizer manages the festival itself, Staff handles operational details, and so on.
 
-- **Backend**: Java 17, Spring Boot 3.2.5
-- **Database**: H2 (in-memory for development)
-- **Security**: JWT (JJWT 0.11.5), Spring Security
-- **Build**: Maven
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+**Festival management**
+Create, update, and browse festivals, with search and pagination so the API stays usable as the number of festivals and performances grows — not just a flat list dump.
 
-## Project Structure
+**Performance booking**
+Artists can submit performances for a festival and manage their own bookings, rather than an admin having to do it manually for everyone.
 
-```
-src/main/
-├── java/com/example/festival_management/
-│   ├── controller/          # REST API endpoints
-│   ├── service/             # Business logic
-│   ├── repository/          # Data access layer
-│   ├── entity/              # JPA entities
-│   ├── config/              # Security and web configuration
-│   ├── security/            # JWT utilities and filters
-│   ├── exception/           # Exception handlers
-│   └── util/                # Helper utilities
-└── resources/
-    ├── static/              # Frontend HTML, CSS, JS
-    ├── application.properties
-    └── data.sql
-```
+**Operational details**
+Beyond the obvious (who's playing, when), the system tracks the things that actually make a festival run: technical/setup requirements per performance, merchandise, and rehearsal slot scheduling.
 
-## Getting Started
+**Frontend**
+A dark-themed, responsive web interface on top of the API, so the project isn't just endpoints in Postman — it's something you can actually click through.
 
-### Prerequisites
+## Tech stack
 
-- Java 17 or higher
-- Maven 3.6+
+- **Backend:** Java, Spring Boot
+- **Security:** Spring Security, JWT
+- **API design:** RESTful, with pagination and search support
+- **Frontend:** Server-rendered / responsive UI (dark theme)
 
-### Installation
+## Why I built it this way
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd festival-booking-system
-```
+The interesting problem here wasn't the CRUD — it was the access control. Festivals genuinely have different stakeholders with different needs, and modeling that with a single role wouldn't reflect how it actually works. Splitting into five roles meant thinking through, for each endpoint, exactly who should be allowed to do what — which is closer to how you'd actually design a system for a real client than a typical student project.
 
-2. Build the project:
-```bash
-mvn clean install
-```
-
-3. Run the application:
-```bash
-mvn spring-boot:run
-```
-
-The application will start at `http://localhost:8080`
-
-### Configuration
-
-Edit `src/main/resources/application.properties` for custom settings:
-
-```properties
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.jpa.hibernate.ddl-auto=update
-spring.h2.console.enabled=true
-
-# JWT Configuration
-jwt.secret=your-secret-key-here
-jwt.expirationMs=3600000
-```
-
-## API Endpoints
-
-### Authentication
-
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `GET /api/auth/me` - Get current user (requires auth)
-
-### Festivals
-
-- `GET /api/festivals` - List festivals (paginated, searchable)
-- `GET /api/festivals/{id}` - Get festival details
-- `POST /api/festivals` - Create new festival (requires auth)
-
-### Performances
-
-- `POST /api/performances/festival/{festivalId}` - Submit new performance
-- `GET /api/performances` - List all performances
-- `GET /api/performances/{id}` - Get performance details
-
-### Users
-
-- `GET /api/users` - List all users
-- `GET /api/users/{username}` - Get user by username
-- `GET /api/users/exists/username/{username}` - Check username availability
-- `GET /api/users/exists/email/{email}` - Check email availability
-
-## Authentication
-
-The API uses Bearer token authentication. Include the JWT token in the Authorization header:
+## Running it locally
 
 ```bash
-curl -H "Authorization: Bearer <token>" http://localhost:8080/api/auth/me
+git clone https://github.com/hkokk1234/festivalflow.git
+cd festivalflow
+./mvnw spring-boot:run
 ```
 
-### Login Example
+*(Add your specific DB config / application.properties setup here once you confirm the exact steps.)*
 
-```bash
-curl -X POST http://localhost:8080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"artist1","password":"password123"}'
-```
+## Possible next steps
 
-Response:
-```json
-{
-  "accessToken": "eyJhbGci...",
-  "token": "eyJhbGci...",
-  "roles": ["ROLE_ARTIST"]
-}
-```
-
-## Database Schema
-
-The application uses JPA with automatic schema generation. Key tables:
-
-- **users**: User accounts and authentication
-- **festivals**: Festival events
-- **performances**: Artist performances at festivals
-- **role_assignments**: User role mappings
-- **reviews**: Performance reviews
-
-## Development
-
-### Running Tests
-
-```bash
-mvn test
-```
-
-### H2 Console
-
-Access the H2 database console at: `http://localhost:8080/h2-console`
-
-Default credentials:
-- URL: `jdbc:h2:mem:testdb`
-- User: `sa`
-- Password: (empty)
-
-## Security
-
-- Passwords are hashed using BCrypt
-- JWT tokens expire after 1 hour (configurable)
-- CSRF protection is enabled for state-changing operations
-- Role-based authorization on protected endpoints
-
-### Development Note
-
-Debug settings are currently enabled for development. For production, disable detailed error messages:
-
-```properties
-server.error.include-stacktrace=on_param
-logging.level.root=INFO
-```
-
-## Future Enhancements
-
-- [ ] Email notifications for performance submissions
-- [ ] Payment integration for ticket sales
-- [ ] Real-time chat between organizers and artists
-- [ ] Advanced analytics and reporting
-- [ ] Mobile app support
-- [ ] External database (PostgreSQL) support
-- [ ] CI/CD pipeline integration
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Support
-
-For questions or issues, please create an issue in the repository.
-
----
-
-Built with ❤️ for festival management
+- Automated tests for the booking and role-permission logic
+- Payment integration for ticket/merchandise purchases
+- Email notifications for booking confirmations
