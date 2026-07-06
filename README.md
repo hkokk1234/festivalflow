@@ -34,13 +34,15 @@ The interesting problem here wasn't the CRUD — it was the access control. Fest
 
 ## Running it locally
 
+The project uses an in-memory H2 database, so there's no external database setup required — it initializes automatically when the app starts.
+
 ```bash
 git clone https://github.com/hkokk1234/festivalflow.git
 cd festivalflow
 ./mvnw spring-boot:run
 ```
 
-*(Add your specific DB config / application.properties setup here once you confirm the exact steps.)*
+Check `application.properties` for the JWT secret and any port/config values before running, in case they need adjusting for your environment.
 
 ## Possible next steps
 
