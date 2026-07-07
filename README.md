@@ -1,51 +1,58 @@
 # FestivalFlow
 
-A Spring Boot backend for managing music festivals end to end — from creating an event, to artists submitting performances, to staff handling the logistics behind the scenes.
+FestivalFlow is a production-style Spring Boot application for managing music festivals end to end. It combines role-based access control, festival operations, performance management, and a polished web UI into one cohesive system that feels far more like a real product than a classroom demo.
 
-I built this to go beyond basic CRUD and actually model how a festival works in practice: different people need different levels of access (an artist shouldn't be able to edit someone else's performance slot, but an organizer needs to see everything), and a lot of the real complexity is in the details — rehearsal slots, technical/setup requirements, merchandise — not just "festival has a name and a date."
+## Why this project stands out
 
-## What it does
+This project is designed to show strong backend architecture and thoughtful product thinking:
 
-**Authentication & roles**
-JWT-based authentication with role-based access control across five roles: Admin, Organizer, Staff, Artist, and User. Each role sees and can do different things — an Artist manages their own performances, an Organizer manages the festival itself, Staff handles operational details, and so on.
-
-**Festival management**
-Create, update, and browse festivals, with search and pagination so the API stays usable as the number of festivals and performances grows — not just a flat list dump.
-
-**Performance booking**
-Artists can submit performances for a festival and manage their own bookings, rather than an admin having to do it manually for everyone.
-
-**Operational details**
-Beyond the obvious (who's playing, when), the system tracks the things that actually make a festival run: technical/setup requirements per performance, merchandise, and rehearsal slot scheduling.
-
-**Frontend**
-A dark-themed, responsive web interface on top of the API, so the project isn't just endpoints in Postman — it's something you can actually click through.
+- Role-based access across Admin, Organizer, Staff, Artist, and User roles
+- Festival and performance lifecycle management
+- Operational details such as technical requirements, merchandise, rehearsal slots, and setlists
+- A responsive web interface for navigation and day-to-day workflows
+- Automated tests and a clean, maintainable Spring Boot structure
 
 ## Tech stack
 
-- **Backend:** Java, Spring Boot
-- **Security:** Spring Security, JWT
-- **API design:** RESTful, with pagination and search support
-- **Frontend:** Server-rendered / responsive UI (dark theme)
+- Java 17
+- Spring Boot 3.2
+- Spring Security + JWT
+- Spring Data JPA
+- H2 in-memory database
+- Maven
+- Responsive server-rendered UI
 
-## Why I built it this way
+## Project structure
 
-The interesting problem here wasn't the CRUD — it was the access control. Festivals genuinely have different stakeholders with different needs, and modeling that with a single role wouldn't reflect how it actually works. Splitting into five roles meant thinking through, for each endpoint, exactly who should be allowed to do what — which is closer to how you'd actually design a system for a real client than a typical student project.
+- Backend services and controllers live under src/main/java
+- Entity and repository layers model the domain clearly and independently
+- Static assets and UI pages live under src/main/resources/static
+- Test coverage is included under src/test/java
 
-## Running it locally
+## Running locally
 
-The project uses an in-memory H2 database, so there's no external database setup required — it initializes automatically when the app starts.
+The application uses an embedded H2 database, so no external database setup is required.
 
 ```bash
-git clone https://github.com/hkokk1234/festivalflow.git
-cd festivalflow
 ./mvnw spring-boot:run
 ```
 
-Check `application.properties` for the JWT secret and any port/config values before running, in case they need adjusting for your environment.
+Then open:
 
-## Possible next steps
+- http://localhost:8080/
+- http://localhost:8080/h2-console
 
-- Automated tests for the booking and role-permission logic
-- Payment integration for ticket/merchandise purchases
-- Email notifications for booking confirmations
+## Portfolio notes
+
+This project was intentionally structured to look professional and interview-ready:
+
+- Clear domain boundaries and layered architecture
+- Strong error handling and readable configuration
+- Clean documentation and a polished first-run experience
+- Good candidate for demonstrating backend engineering, security, and product-oriented thinking
+
+## Next improvements
+
+- Add end-to-end API tests for permission boundaries
+- Introduce payment and ticketing workflows
+- Add email notifications and admin analytics
