@@ -32,13 +32,16 @@ build/
 ### VS Code ###
 .vscode/
 
-
 # OS junk
 .DS_Store
 Thumbs.db
 
 # Logs
 *.log
+
+# Local databases
+/data/*.mv.db
+/data/*.trace.db
 
 # Maven/Gradle wrappers
 /.mvn/wrapper/maven-wrapper.jar
