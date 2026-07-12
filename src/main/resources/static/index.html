@@ -1,26 +1,52 @@
 <!doctype html>
-<html lang="el">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Festival Management</title>
-    <link rel="icon" href="/assets/favicon.ico" />
+    <meta name="description" content="FestivalFlow is a modern Spring Boot platform for managing festivals, performances, and backstage operations." />
+    <title>FestivalFlow</title>
+    <link rel="icon" href="/assets/logo.svg" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <style>
-      /* Προαιρετικό, μίνι στυλ για τα κουμπιά */
-      body{margin:0;font:16px/1.5 system-ui,Segoe UI,Roboto;background:#0f172a;color:#e5e7eb;display:grid;place-items:center;height:100dvh}
-      .wrap{display:grid;gap:1rem;text-align:center}
-      .title{font-size:1.6rem;margin-bottom:.25rem}
-      .btn{padding:.75rem 1.1rem;border-radius:12px;border:1px solid #1f2937;background:#0b3750;color:#e5e7eb;text-decoration:none;display:inline-block;min-width:240px}
-      .btn:hover{filter:brightness(1.08)}
-    </style>
   </head>
   <body>
-    <div class="wrap">
-      <div class="title">Festival Management</div>
-      <a class="btn" href="/login.html">Login</a>
-      <a class="btn" href="/register.html">Register</a>
-      <a class="btn" href="/performances.html">View Performances</a>
-    </div>
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Spring Boot • Role-based operations • Portfolio-ready</p>
+        <h1>FestivalFlow</h1>
+        <p class="hero__text">
+          A modern festival management platform designed to model real-world event operations, from artist scheduling to organizer oversight.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="/login.html">Open dashboard</a>
+          <a class="btn btn--secondary" href="/performances.html">Browse performances</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="grid grid--three">
+        <article class="card">
+          <h2>Role-aware workflows</h2>
+          <p>Admins, organizers, staff, artists, and attendees each interact with the platform through tailored access and responsibilities.</p>
+        </article>
+        <article class="card">
+          <h2>Operational depth</h2>
+          <p>Go beyond basic CRUD with technical requirements, rehearsal slots, merchandise planning, and festival-state management.</p>
+        </article>
+        <article class="card">
+          <h2>Professional foundation</h2>
+          <p>Built with Spring Boot, JWT security, JPA persistence, and a clean UI that is easy to showcase in interviews and portfolios.</p>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>What you can do</h2>
+        <ul>
+          <li>Create and manage festivals and performance schedules</li>
+          <li>Authenticate securely with JWT-based access control</li>
+          <li>Inspect the API and demo the experience through the built-in UI</li>
+        </ul>
+      </section>
+    </main>
   </body>
 </html>
